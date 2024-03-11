@@ -238,4 +238,4 @@ predictions = [1 if prob > 0.5 else 0 for prob in probabilities]
 
 # Now call the plotting function with test images and their predicted labels
 plotImages(test_images, predictions)
-
+```
