@@ -1,0 +1,13 @@
+
+Testing game against abbey...
+Final results: {'p1': 590, 'p2': 170, 'tie': 240}
+Player 1 win rate: 77.63157894736842%
+Testing game against kris...
+Final results: {'p1': 995, 'p2': 4, 'tie': 1}
+Player 1 win rate: 99.5995995995996%
+Testing game against mrugesh...
+Final results: {'p1': 994, 'p2': 5, 'tie': 1}
+Player 1 win rate: 99.4994994994995%
+Testing game against quincy...
+Final results: {'p1': 996, 'p2': 3, 'tie': 1}
+Player 1 win rate: 99.69969969969969%
