@@ -99,7 +99,7 @@ train_image_generator = ImageDataGenerator(
     width_shift_range = 0.2,
     shear_range = 0.2,
     zoom_range = 0.2)
-
+```
 
 # Visualizing Data Augmentation
 
