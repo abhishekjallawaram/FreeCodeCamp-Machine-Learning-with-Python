@@ -178,7 +178,7 @@ history = model.fit(
         epochs=epochs,
         validation_data=val_data_gen,
         validation_steps=total_val // batch_size)
-
+```
 
 # Visualizing Model Performance
 
