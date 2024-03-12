@@ -85,12 +85,6 @@ def plotImages(images_arr, probabilities = False):
 sample_training_images, _ = next(train_data_gen)
 plotImages(sample_training_images[:5])
 
-sample_training_images, _ = next(train_data_gen)
-plotImages(sample_training_images[:5])
-
-sample_training_images, _ = next(train_data_gen)
-plotImages(sample_training_images[:5])
-
 # 5
 train_image_generator = ImageDataGenerator(
     rescale=rescale,
@@ -177,8 +171,6 @@ plt.show()
 
 predictions = model.predict(test_data_gen)
 probabilities = [1 if a[0]<a[1] else 0 for a in predictions]
-
-print(len(probabilities)) 
 
 # 11
 answers =  [1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0,
