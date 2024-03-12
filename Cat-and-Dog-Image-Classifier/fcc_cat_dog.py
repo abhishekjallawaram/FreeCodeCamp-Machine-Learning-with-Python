@@ -59,7 +59,7 @@ val_data_gen = validation_image_generator.flow_from_directory(
 
 test_data_gen = test_image_generator.flow_from_directory(
     batch_size=batch_size,
-    classes=["."], # this is the trick bit
+    classes=["."],
     directory='./cats_and_dogs',
     target_size=(IMG_HEIGHT, IMG_WIDTH),
     shuffle=False,
