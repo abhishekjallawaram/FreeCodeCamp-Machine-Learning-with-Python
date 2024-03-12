@@ -15,9 +15,9 @@ from sklearn.neighbors import NearestNeighbors
 import matplotlib.pyplot as plt
 
 # get data files
-!wget https://cdn.freecodecamp.org/project-data/books/book-crossings.zip
+# !wget https://cdn.freecodecamp.org/project-data/books/book-crossings.zip
 
-!unzip book-crossings.zip
+# !unzip book-crossings.zip
 
 books_filename = 'BX-Books.csv'
 ratings_filename = 'BX-Book-Ratings.csv'
@@ -42,12 +42,50 @@ df_ratings = pd.read_csv(
     dtype={'user': 'int32', 'isbn': 'str', 'rating': 'float32'})
 
 # add your code here - consider creating a new cell for each section of code
+# Data Preprocessing
+# Filter books with at least 100 ratings
+books_ratings_count = df_ratings['isbn'].value_counts()
+good_books_isbns = books_ratings_count[books_ratings_count >= 100].index
+filtered_books = df_books[df_books['isbn'].isin(good_books_isbns)]
+
+# Filter users with at least 200 ratings
+users_ratings_count = df_ratings['user'].value_counts()
+good_users_ids = users_ratings_count[users_ratings_count >= 200].index
+filtered_ratings = df_ratings[df_ratings['user'].isin(good_users_ids) & df_ratings['isbn'].isin(good_books_isbns)]
+
+# Pivot table creation optimized
+df_book_features = filtered_ratings.pivot_table(index='isbn', columns='user', values='rating', fill_value=0)
+mat_book_features = csr_matrix(df_book_features.values)
+
+# Model Creation is concise and remains efficient
+model = NearestNeighbors(metric='cosine', algorithm='brute')
+model.fit(mat_book_features)
+
 
 # function to return recommended books - this will be tested
-def get_recommends(book = ""):
+def get_recommends(title=""):
+    # Check if the book title exists in the filtered_books dataframe
+    if title in filtered_books['title'].values:
+        # Get ISBNs of the book matching the title
+        book_isbn = filtered_books[filtered_books['title'] == title]['isbn'].iloc[0]
+        if book_isbn in df_book_features.index:
+            # Locate the book in the feature matrix
+            book_idx = df_book_features.index.get_loc(book_isbn)
+            distances, indices = model.kneighbors(df_book_features.iloc[book_idx, :].values.reshape(1, -1), n_neighbors=6)
+            
+            # Get titles of the recommended books
+            recommended_books_isbns = df_book_features.index[indices.flatten()[1:]]  # exclude first match (itself)
+            recommended_titles = filtered_books[filtered_books['isbn'].isin(recommended_books_isbns)]['title'].tolist()
+            
+            # Pair titles with distances and reverse to match desired output format
+            recommendations = list(zip(recommended_titles, distances.flatten()[1:]))[::-1]
+            
+            return [title, recommendations]
+        else:
+            return [title, ["Book not found in matrix."]]
+    else:
+        return [title, ["Book title not found."]]
 
-
-  return recommended_books
 
 books = get_recommends("Where the Heart Is (Oprah's Book Club (Paperback))")
 print(books)
