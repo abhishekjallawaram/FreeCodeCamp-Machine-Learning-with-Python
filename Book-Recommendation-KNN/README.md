@@ -36,4 +36,24 @@ Expected Output:
 ]
 ```
 
+## Strategy Overview
+
+### Data Preprocessing
+- **Filtering Criteria**: Concentrate on books that have received at least 100 ratings and users who have provided at least 200 ratings. This approach ensures that the dataset used for recommendations is reliable and meaningful.
+- **Pivot Table Creation**: Convert the ratings data into a matrix suitable for analysis with the KNN algorithm. This matrix uses ISBNs as rows, representing each book, and user IDs as columns, with their ratings as values.
+
+### Model Development
+- **NearestNeighbors**: Utilize the cosine similarity metric to evaluate the "closeness" of books based on the patterns in user ratings. This method helps in identifying books that are likely to be of interest to the user, based on preferences of similar users.
+
+### Recommendation Logic
+- **Book Identification**: First, locate the book within the dataset by its title to ensure that the recommendations are relevant to the user's request.
+- **Nearest Neighbors Search**: Use the KNN model to find the five closest books to the requested title, based on their ratings. This step is crucial for generating meaningful recommendations.
+- **Output Formatting**: Present the original book title followed by a list of the recommended books and their respective distances from the original title. The list is sorted to place the most relevant recommendations at the top, making it easy for users to explore similar books.
+
+### Coding Environment
+
+- The notebook is designed with interspersed code and documentation cells. This layout facilitates an understanding of the process involved in preparing the data, training the model, and implementing the `get_recommends` function.
+- **Preparation**: Before proceeding with the code, ensure that all required libraries are imported and that the Book-Crossings dataset is correctly loaded and accessible.
+
+This structured approach aims to streamline the development of a book recommendation system, emphasizing the importance of clean, reliable data and the effective use of machine learning algorithms to provide valuable insights.
 
